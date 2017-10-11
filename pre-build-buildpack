@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+APP="$1"; IMAGE="dokku/$APP"
+
+echo "-----> Injecting vapor dependencies ..."
+
+DIR=/app
+
+COMMAND=$(cat <<EOF
+export DEBIAN_FRONTEND=noninteractive
+if [ -f $DIR/.vapor-dependencies ]; then
+    eval "\$(curl -sL https://apt.vapor.sh)"
+    PACKAGES=\$(cat "$DIR/.vapor-dependencies") | tr "\\n" " ")
+    apt-get install -y \$PACKAGES
+    echo "-----> Injected vapor dependencies: \$PACKAGES"
+fi
+unset DEBIAN_FRONTEND
+sleep 1
+EOF
+)
+
+id=$(docker run -d $IMAGE /bin/bash -e -c "$COMMAND")
+#enable logs
+docker attach $id
+test $(docker wait $id) -eq 0
+docker commit $id $IMAGE > /dev/null
