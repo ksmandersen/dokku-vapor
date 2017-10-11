@@ -16,7 +16,8 @@ if [ -f $DIR/.vapor-dependencies ]; then
     wget https://repo.vapor.codes/apt/keyring.gpg -O- | apt-key add -
     echo "deb https://repo.vapor.codes/apt xenial main" | tee /etc/apt/sources.list.d/vapor.list
     apt-get update
-    apt-get install -y cmysql
+    PACKAGES=\$(cat "$DIR/.vapor-dependencies" | tr "\\n" " ")
+    pt-get install -y \$PACKAGES
 fi
 sleep 1
 EOF
