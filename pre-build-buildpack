@@ -11,8 +11,13 @@ DIR=/app
 COMMAND=$(cat <<EOF
 export DEBIAN_FRONTEND=noninteractive
 if [ -f $DIR/.vapor-dependencies ]; then
-    eval "\$(curl -sL https://apt.vapor.sh)"
+    echo "-----> vapor dependencies detected"
+    eval "\$(cat /etc/lsb-release)"
+    apt-get -q install -y wget software-properties-common python-software-properties apt-transport-https
+    wget -q https://repo.vapor.codes/apt/keyring.gpg -O- | apt-key add -
+    echo "deb https://repo.vapor.codes/apt $DISTRIB_CODENAME main" | tee /etc/apt/sources.list.d/vapor.list
     PACKAGES=\$(cat "$DIR/.vapor-dependencies") | tr "\\n" " ")
+    apt-get -q update
     apt-get install -y \$PACKAGES
     echo "-----> Injected vapor dependencies: \$PACKAGES"
 fi
