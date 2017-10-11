@@ -12,11 +12,11 @@ COMMAND=$(cat <<EOF
 export DEBIAN_FRONTEND=noninteractive
 if [ -f $DIR/.vapor-dependencies ]; then
     echo "-----> vapor dependencies detected"
-    apt-get -q install -y wget software-properties-common python-software-properties apt-transport-https
-    wget -q https://repo.vapor.codes/apt/keyring.gpg -O- | apt-key add -
+    apt-get install -y wget software-properties-common python-software-properties apt-transport-https
+    wget https://repo.vapor.codes/apt/keyring.gpg -O- | apt-key add -
     echo "deb https://repo.vapor.codes/apt xenial main" | tee /etc/apt/sources.list.d/vapor.list
-    PACKAGES=\$(cat "$DIR/.vapor-dependencies") | tr "\\\n" " ")
-    apt-get -q update
+    PACKAGES=\$(cat "$DIR/.vapor-dependencies") | tr "\\n" " ")
+    apt-get update
     apt-get install -y \$PACKAGES
     echo "-----> Injected vapor dependencies: \$PACKAGES"
 fi
@@ -29,3 +29,4 @@ id=$(docker run -d $IMAGE /bin/bash -e -c "$COMMAND")
 docker attach $id
 test $(docker wait $id) -eq 0
 docker commit $id $IMAGE > /dev/null
+
