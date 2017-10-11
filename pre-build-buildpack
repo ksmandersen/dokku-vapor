@@ -17,7 +17,7 @@ if [ -f $DIR/.vapor-dependencies ]; then
     echo "deb https://repo.vapor.codes/apt xenial main" | tee /etc/apt/sources.list.d/vapor.list
     apt-get update
     PACKAGES=\$(cat "$DIR/.vapor-dependencies" | tr "\\n" " ")
-    pt-get install -y \$PACKAGES
+    apt-get install -y \$PACKAGES
 fi
 sleep 1
 EOF
