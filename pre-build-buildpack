@@ -11,15 +11,12 @@ DIR=/app
 COMMAND=$(cat <<EOF
 export DEBIAN_FRONTEND=noninteractive
 if [ -f $DIR/.vapor-dependencies ]; then
-    echo "-----> vapor dependencies detected"
     apt-get update
     apt-get install -y wget software-properties-common python-software-properties apt-transport-https
     wget https://repo.vapor.codes/apt/keyring.gpg -O- | apt-key add -
     echo "deb https://repo.vapor.codes/apt xenial main" | tee /etc/apt/sources.list.d/vapor.list
     apt-get update
-    PACKAGES=\$(cat "$DIR/.vapor-dependencies") | tr "\\n" " ")
-    apt-get install -y \$PACKAGES
-    echo "-----> Injected vapor dependencies: \$PACKAGES"
+    apt-get install -y cmysql
 fi
 sleep 1
 EOF
