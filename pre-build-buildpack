@@ -19,25 +19,6 @@ if [ -f $DIR/.vapor-dependencies ]; then
     PACKAGES=\$(cat "$DIR/.vapor-dependencies" | tr "\\n" " ")
     apt-get install -y \$PACKAGES
 fi
-if [ -f $DIR/.vapor-apns ]; then
-   apt-get install -y  g++ make binutils autoconf automake autotools-dev libtool pkg-config \
-  zlib1g-dev libcunit1-dev libssl-dev libxml2-dev libev-dev libevent-dev libjansson-dev \
-  libc-ares-dev libjemalloc-dev libsystemd-dev libspdylay-dev \
-  cython python3-dev python-setuptools build-essential
-   wget https://github.com/nghttp2/nghttp2/releases/download/v1.26.0/nghttp2-1.26.0.tar.bz2
-   cd nghttp2-1.26.0
-   ./configure
-   make
-   make install
-   cd ..
-   wget https://curl.haxx.se/download/curl-7.54.0.tar.bz2
-   tar -xvjf curl-7.54.0.tar.bz2
-   cd curl-7.54.0
-   ./configure --with-nghttp2 --prefix=/usr/local
-   make
-   make install
-   ldconfig
-fi
 sleep 1
 EOF
 )

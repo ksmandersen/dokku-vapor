@@ -1,6 +1,6 @@
 [plugin]
 name = "dokku-vapor"
 description = "Inject vapor dependencies into dokku docker container"
-version = "0.2.1"
+version = "1.0.0"
 website_url = "https://github.com/ksmandersen/dokku-vapor"
 [plugin.config]
