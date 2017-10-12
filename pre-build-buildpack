@@ -19,6 +19,16 @@ if [ -f $DIR/.vapor-dependencies ]; then
     PACKAGES=\$(cat "$DIR/.vapor-dependencies" | tr "\\n" " ")
     apt-get install -y \$PACKAGES
 fi
+if [ -f $DIR/.vapor-apns ]; then
+   apt-get install -y build-essential nghttp2 libnghttp2-dev
+   wget https://curl.haxx.se/download/curl-7.54.0.tar.bz2
+   tar -xvjf curl-7.54.0.tar.bz2
+   cd curl-7.54.0
+   ./configure --with-nghttp2 --prefix=/usr/local
+   make
+   make install
+   ldconfig
+fi
 sleep 1
 EOF
 )
