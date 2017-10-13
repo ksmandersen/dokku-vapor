@@ -39,6 +39,7 @@ if [ -f "$DIR/.vapor-apns" ]; then
    make
    make install
    ldconfig
+   ln -fs /usr/local/bin/curl /usr/bin/curl
    cd ..
    rm -rf nghttp2
    rm -rf curl-7.56.0
