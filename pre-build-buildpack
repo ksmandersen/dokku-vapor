@@ -39,6 +39,7 @@ if [ -f "$DIR/.vapor-apns" ]; then
    make
    make install
    ldconfig
+   apt-get remove curl
    ln -fs /usr/local/bin/curl /usr/bin/curl
    cd ..
    rm -rf nghttp2
