@@ -35,7 +35,8 @@ if [ -f "$DIR/.vapor-apns" ]; then
    wget http://curl.haxx.se/download/curl-7.56.0.tar.bz2
    tar -xvjf curl-7.56.0.tar.bz2
    cd curl-7.56.0
-   ./configure --with-nghttp2=/usr/local --with-ssl
+   sed -i -e "s/CURL_@CURL_LT_SHLIB_VERSIONED_FLAVOUR@4/CURL_@CURL_LT_SHLIB_VERSIONED_FLAVOUR@3/g" lib/libcurl.vers.in
+   ./configure --with-nghttp2=/usr/local --with-ssl --enable-versioned-symbols
    make
    make install
    ldconfig
